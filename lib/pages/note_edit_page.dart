@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cobaflutter/pages/note_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 
 class NoteEditPage extends StatefulWidget {
@@ -36,7 +38,7 @@ class NoteEditPage extends StatefulWidget {
           'description': description,
         });
       }
-      
+
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
@@ -70,6 +72,7 @@ class NoteEditPage extends StatefulWidget {
     if (confirmed == true) {
       final supabase = Supabase.instance.client;
       await supabase.from('notes').delete().eq('id', note?.id ?? '');
+       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('berhasil menghapus catatan')));
